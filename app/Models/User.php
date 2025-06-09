@@ -51,10 +51,5 @@ class User extends Authenticatable
         ];
     }
 
-    // You can define other relationships here if needed
-    // For example:
-    // public function articles()
-    // {
-    //    return $this->hasMany(Article::class);
-    // }
+   
 }
