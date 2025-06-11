@@ -9,12 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;   // <--- IMPORT Sanctum Trait
 use Spatie\Permission\Traits\HasRoles; // <--- IMPORT Spatie Permission Trait
 
-class User extends Authenticatable 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory,
         Notifiable,
-        HasApiTokens, 
+        HasApiTokens,
         HasRoles;     // <--- USE Spatie Permission Trait
 
     /**
@@ -51,5 +53,18 @@ class User extends Authenticatable
         ];
     }
 
-   
+    public function leaveRequests(): HasMany
+    {
+        return $this->hasMany(LeaveRequest::class, 'employee_id');
+    }
+
+
+    public function approvedLeaveRequests(): HasMany
+    {
+        return $this->hasMany(LeaveRequest::class, 'approver_id');
+    }
+    public function Attendances(): HasMany
+    {
+        return $this->hasMany(AttendanceRecord::class, 'employee_id');
+    }
 }
