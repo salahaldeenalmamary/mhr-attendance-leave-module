@@ -5,7 +5,7 @@ namespace App\Http\Requests\API;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use App\Http\Resources\API\ApiResponseResource;
+use App\Http\Resources\ApiResponseResource;
 
 /**
  * Base request class for all API form requests.
@@ -28,4 +28,6 @@ abstract class ApiRequest extends FormRequest
 
         throw new HttpResponseException($response);
     }
+
+    
 }

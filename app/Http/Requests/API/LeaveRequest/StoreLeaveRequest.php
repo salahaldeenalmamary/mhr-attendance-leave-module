@@ -6,9 +6,9 @@ use \App\Http\Requests\API\ApiRequest;
 
 class StoreLeaveRequest extends ApiRequest
 {
-     public function authorize(): bool
+    public function authorize(): bool
     {
-        return auth()->check(); 
+        return auth()->check();
     }
     public function rules(): array
     {
@@ -16,8 +16,9 @@ class StoreLeaveRequest extends ApiRequest
             'leave_type_id' => 'required|exists:leave_types,id',
             'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'reason' => 'required|string|max:1000'
-         
+            'reason' => 'required|string|max:1000',
+            'requested_days'=>'required|int'
+
         ];
     }
 

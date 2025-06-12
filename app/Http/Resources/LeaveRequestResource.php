@@ -18,7 +18,7 @@ class LeaveRequestResource extends JsonResource
             'id' => $this->id,
             'start_date' => $this->start_date->toDateString(),
             'end_date' => $this->end_date->toDateString(),
-            'requested_days' => (float) $this->requested_days,
+            'requested_days' =>$this->requested_days,
             'reason' => $this->reason,
             'status' => $this->status,
             'rejection_reason' => $this->when($this->status === 'Rejected', $this->rejection_reason),

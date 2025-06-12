@@ -27,17 +27,5 @@ class LoginRequest extends ApiRequest
     ];
     }
 
-     public function messages(): array
-    {
-        return [
-           
-            'email.required' => 'The email address is required.',
-
-           
-            'email.email' => 'Please provide a valid email address.',
-
-          
-            'password.required' => 'The password is required to log in.',
-        ];
-    }
+   
 }

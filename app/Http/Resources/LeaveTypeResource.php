@@ -17,7 +17,7 @@ class LeaveTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'default_annual_entitlement' => (int) $this->default_annual_entitlement,
+          
         ];
     }
 }
