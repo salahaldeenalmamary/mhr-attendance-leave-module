@@ -9,7 +9,7 @@ use App\Http\Resources\ApiResponseResource;
 use App\Http\Resources\LeaveRequestResource;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
-
+use App\Events\LeaveRequestSubmitted;
 class LeaveRequestController extends Controller
 {
     public function getBalances()
@@ -36,6 +36,8 @@ class LeaveRequestController extends Controller
     public function store(StoreLeaveRequest $request)
     {
         $leaveRequest = auth()->user()->leaveRequests()->create($request->validated());
+
+          LeaveRequestSubmitted::dispatch($leaveRequest);
         return ApiResponseResource::success(new LeaveRequestResource($leaveRequest), 'Leave request submitted.')
             ->response()->setStatusCode(201);
     }

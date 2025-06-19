@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;   // <--- IMPORT Sanctum Trait
-use Spatie\Permission\Traits\HasRoles; // <--- IMPORT Spatie Permission Trait
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles; 
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -67,4 +68,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(AttendanceRecord::class, 'employee_id');
     }
+    
+
+    
 }
