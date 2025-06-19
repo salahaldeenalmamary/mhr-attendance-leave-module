@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LeaveRequestController;
 use App\Http\Controllers\API\LeaveTypeController;
+use App\Http\Controllers\API\AttendanceController;
 
 Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
     Route::post('/register', 'register')->name('register');
@@ -50,5 +51,18 @@ Route::middleware('auth:sanctum')->group(function () {
             ;
             //  ->middleware('can:cancel,leave_request')
         });
+    });
+
+
+    Route::prefix('attendance')->name('attendance.')->group(function () {
+
+
+        Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
+
+
+        Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
+
+
+        Route::get('/history', [AttendanceController::class, 'history'])->name('history');
     });
 });
