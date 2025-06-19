@@ -36,7 +36,8 @@ class LeaveRequestController extends Controller
     public function store(StoreLeaveRequest $request)
     {
         $leaveRequest = auth()->user()->leaveRequests()->create($request->validated());
-
+ $leaveRequest->load(['employee', 'leaveType']);
+ 
           LeaveRequestSubmitted::dispatch($leaveRequest);
         return ApiResponseResource::success(new LeaveRequestResource($leaveRequest), 'Leave request submitted.')
             ->response()->setStatusCode(201);

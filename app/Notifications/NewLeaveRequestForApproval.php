@@ -18,10 +18,10 @@ class NewLeaveRequestForApproval extends Notification
         $this->leaveRequest = $leaveRequest;
     }
 
-    
+
     public function via(object $notifiable): array
     {
-       
+
         return ['mail', 'database'];
     }
 
@@ -30,24 +30,25 @@ class NewLeaveRequestForApproval extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $employeeName = $this->leaveRequest->user->name;
-        $leaveType = $this->leaveRequest->leaveType->name;
-        $url = url('/dashboard/leave-requests/' . $this->leaveRequest->id); 
+        $employeeName = $this->leaveRequest->employee?->name ?? 'Unknown Employee';
+        $leaveType = $this->leaveRequest->leaveType?->name ?? 'Unknown Type';
+
+        $url = url('/dashboard/leave-requests/' . $this->leaveRequest->id);
 
         return (new MailMessage)
-                    ->subject("New Leave Request from {$employeeName}")
-                    ->line("A new leave request has been submitted by {$employeeName} for your approval.")
-                    ->line("Type: {$leaveType}")
-                    ->line("Dates: {$this->leaveRequest->start_date->format('M d, Y')} to {$this->leaveRequest->end_date->format('M d, Y')}")
-                    ->action('View Request', $url)
-                    ->line('Thank you for your attention to this matter.');
+            ->subject("New Leave Request from {$employeeName}")
+            ->line("A new leave request has been submitted by {$employeeName} for your approval.")
+            ->line("Type: {$leaveType}")
+            ->line("Dates: {$this->leaveRequest->start_date->format('M d, Y')} to {$this->leaveRequest->end_date->format('M d, Y')}")
+            ->action('View Request', $url)
+            ->line('Thank you for your attention to this matter.');
     }
 
     public function toArray(object $notifiable): array
     {
         return [
             'leave_request_id' => $this->leaveRequest->id,
-            'employee_name' => $this->leaveRequest->user->name,
+            'employee_name' =>  $this->leaveRequest->employee?->name,
             'message' => 'A new leave request requires your approval.',
         ];
     }

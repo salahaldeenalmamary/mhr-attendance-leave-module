@@ -24,7 +24,8 @@ class NotifyManagerOfLeaveRequest implements ShouldQueue
      */
     public function handle(LeaveRequestSubmitted $event): void
     {
-        // Get the LeaveRequest model from the event
+      $leaveRequest = $event->leaveRequest->load(['employee', 'leaveType']);
+
         $leaveRequest = $event->leaveRequest;
 
         $managers = User::role(self::APPROVER_ROLE)->get();
