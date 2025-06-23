@@ -40,35 +40,37 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // 401 Unauthenticated
         $exceptions->renderable(function (AuthenticationException $e, Request $request) {
-            return ApiResponseResource::error(null, 'Unauthenticated.')
-                ->response()->setStatusCode(401);
+            if ($request->is('api/*')) {
+                return ApiResponseResource::error(null, message: 'Unauthenticated.')
+                    ->response()->setStatusCode(401);
+            }
         });
 
-        // 403 Forbidden
-        $exceptions->renderable(function (AuthorizationException $e, Request $request) {
-            return ApiResponseResource::error(null, 'You are not authorized to perform this action.')
-                ->response()->setStatusCode(403);
-        });
+        // // 403 Forbidden
+        // $exceptions->renderable(function (AuthorizationException $e, Request $request) {
+        //     return ApiResponseResource::error(null, 'You are not authorized to perform this action.')
+        //         ->response()->setStatusCode(403);
+        // });
         
-        // 405 Method Not Allowed
-        $exceptions->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
-            $allowedMethods = $e->getHeaders()['Allow'];
-            $message = "The {$request->method()} method is not supported. Supported methods: {$allowedMethods}.";
-            return ApiResponseResource::error(null, $message)
-                ->response()->setStatusCode(405)->withHeaders($e->getHeaders());
-        });
+        // // 405 Method Not Allowed
+        // $exceptions->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
+        //     $allowedMethods = $e->getHeaders()['Allow'];
+        //     $message = "The {$request->method()} method is not supported. Supported methods: {$allowedMethods}.";
+        //     return ApiResponseResource::error(null, $message)
+        //         ->response()->setStatusCode(405)->withHeaders($e->getHeaders());
+        // });
 
-        // 404 Not Found
-        $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
-            return ApiResponseResource::error(null, 'The requested resource was not found.')
-                ->response()->setStatusCode(404);
-        });
+        // // 404 Not Found
+        // $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
+        //     return ApiResponseResource::error(null, 'The requested resource was not found.')
+        //         ->response()->setStatusCode(404);
+        // });
         
-        // Generic HttpException (for abort calls)
-        $exceptions->renderable(function (HttpException $e, Request $request) {
-            return ApiResponseResource::error(null, $e->getMessage() ?: 'An HTTP error occurred.')
-                ->response()->setStatusCode($e->getStatusCode());
-        });
+        // // Generic HttpException (for abort calls)
+        // $exceptions->renderable(function (HttpException $e, Request $request) {
+        //     return ApiResponseResource::error(null, $e->getMessage() ?: 'An HTTP error occurred.')
+        //         ->response()->setStatusCode($e->getStatusCode());
+        // });
 
         
       
